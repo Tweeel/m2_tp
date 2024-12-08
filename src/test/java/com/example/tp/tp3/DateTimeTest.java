@@ -13,6 +13,32 @@ public class DateTimeTest {
     }
 
     @Test
+    public void testInvalidHours() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new DateTime(1, 1, 2024, -1, 0, 0));
+        assertThrows(IllegalArgumentException.class, () ->
+                new DateTime(1, 1, 2024, 24, 0, 0));
+    }
+
+    @Test
+    public void testInvalidMinutes() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new DateTime(1, 1, 2024, 1, -1, 0));
+        assertThrows(IllegalArgumentException.class, () ->
+                new DateTime(1, 1, 2024, 1, 60, 0));
+    }
+
+    @Test
+    public void testInvalidSeconds() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new DateTime(1, 1, 2024, 1, 0, -1));
+        assertThrows(IllegalArgumentException.class, () ->
+                new DateTime(1, 1, 2024, 1, 0, 60));
+    }
+
+
+
+    @Test
     public void testSecondsOverflow() {
         DateTime dt = new DateTime(1, 1, 2024, 12, 30, 59);
         assertEquals(new DateTime(1, 1, 2024, 12, 31, 0),

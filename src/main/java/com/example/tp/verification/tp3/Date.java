@@ -52,9 +52,4 @@ public class Date {
         if (!(obj instanceof Date other)) return false;
         return day == other.day && month == other.month && year == other.year;
     }
-
-    @Override
-    public String toString() {
-        return String.format("%02d/%02d/%04d", day, month, year);
-    }
 }

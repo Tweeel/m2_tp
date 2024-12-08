@@ -89,4 +89,64 @@ public class DateCalculatorTest {
         Date july = new Date(31, 7, 2024);
         assertEquals(new Date(1, 8, 2024), july.getNext());
     }
+
+    @Test
+    public void testFebruaryLeapYearCases() {
+        assertDoesNotThrow(() -> new Date(29, 2, 2024));
+        assertDoesNotThrow(() -> new Date(29, 2, 2000));
+        assertThrows(IllegalArgumentException.class, () ->
+                new Date(29, 2, 1900));
+    }
+
+    @Test
+    public void testFebruaryNonLeapYearCases() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new Date(29, 2, 2023));
+        assertDoesNotThrow(() -> new Date(28, 2, 2023));
+    }
+
+    @Test
+    public void testMonthBoundariesForAllMonths() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new Date(31, 4, 2024));
+        assertThrows(IllegalArgumentException.class, () ->
+                new Date(31, 6, 2024));
+        assertThrows(IllegalArgumentException.class, () ->
+                new Date(31, 9, 2024));
+        assertThrows(IllegalArgumentException.class, () ->
+                new Date(31, 11, 2024));
+
+        // Test transitions at month ends
+        assertEquals(new Date(1, 5, 2024), new Date(30, 4, 2024).getNext());
+        assertEquals(new Date(1, 7, 2024), new Date(30, 6, 2024).getNext());
+        assertEquals(new Date(1, 10, 2024), new Date(30, 9, 2024).getNext());
+        assertEquals(new Date(1, 12, 2024), new Date(30, 11, 2024).getNext());
+    }
+
+    @Test
+    public void testEqualsMethod() {
+        Date date1 = new Date(15, 3, 2024);
+        Date date2 = new Date(15, 3, 2024);
+        Date date3 = new Date(16, 3, 2024);
+        Date date4 = new Date(15, 4, 2024);
+        Date date5 = new Date(15, 3, 2023);
+
+        assertEquals(date1, date2);
+
+        assertNotEquals(date1, date3);
+        assertNotEquals(date1, date4);
+        assertNotEquals(date1, date5);
+
+        assertNotEquals(date1, null);
+
+        assertNotEquals(date1, "not a date");
+    }
+
+    @Test
+    public void testEdgeCaseDates() {
+        assertDoesNotThrow(() -> new Date(1, 1, 1582));
+        assertDoesNotThrow(() -> new Date(31, 12, 3000));
+        Date endOf1999 = new Date(31, 12, 1999);
+        assertEquals(new Date(1, 1, 2000), endOf1999.getNext());
+    }
 }
