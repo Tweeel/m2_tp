@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+group = 'com.example.tp'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    // rules
+    testImplementation 'org.junit.jupiter:junit-jupiter-params'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    // mockito
+    testImplementation 'org.mockito:mockito-core:5.8.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+kotlin {
+    jvmToolchain(17)
+}
